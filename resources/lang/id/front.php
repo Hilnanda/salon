@@ -39,11 +39,14 @@ return array (
   'registration' => 
   array (
     'firstName' => 'Nama Depan',
+    'name' => 'Nama',
     'lastName' => 'Nama Belakang',
     'email' => 'Email',
     'phoneNumber' => 'Nomor Telepon',
   ),
   'accountCreateNotice' => 'Catatan: Akun Anda akan dibuat secara otomatis.',
+  'accountUserNotice1' => 'Nama anda menjadi USERNAME.',
+  'accountUserNotice2' => 'Nomor telepon anda menjadi PASSWORD.',
   'bookingDate' => 'Tanggal Pemesanan',
   'bookingTime' => 'Waktu Pemesanan',
   'amountToPay' => 'Jumlah yang harus dibayar',

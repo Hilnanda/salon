@@ -66,17 +66,25 @@
                             </div>
                         <?php else: ?>
                             <div class="detail-image mb-30">
-                                <img src="<?php echo e($service->service_image_url); ?>" alt="service">
+                                
                             </div>
                         <?php endif; ?>
                         <div class="content">
-                            <?php echo $service->description; ?>
-
+                            
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-12 col-xs-12 mb-60">
                         <div class="detail-info mb-5">
                             <ul>
+                                <li>
+                                    <span>
+                                        <?php echo app('translator')->getFromJson('app.detailProduct'); ?> 
+                                    </span>
+                                    <span>
+                                        <?php echo $service->description; ?>
+
+                                    </span>
+                                </li>
                                 <li>
                                     <span>
                                         <?php echo app('translator')->getFromJson('app.service'); ?> <?php echo app('translator')->getFromJson('app.name'); ?>

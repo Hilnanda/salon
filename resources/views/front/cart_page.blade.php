@@ -49,6 +49,7 @@
                                 <thead>
                                 <tr>
                                     <th>@lang('front.table.headings.serviceName')</th>
+                                    <th>Duration</th>
                                     <th>@lang('front.table.headings.unitPrice')</th>
                                     <th>@lang('front.table.headings.quantity')</th>
                                     <th>@lang('front.table.headings.subTotal')</th>
@@ -63,6 +64,7 @@
                                         @foreach($products as $key => $product)
                                             <tr id="{{ $key }}">
                                                 <td>{{ $product['serviceName'] }}</td>
+                                                <td>{{ $product['serviceTime'] ?? '-' }}</td>
                                                 <td>{{ $settings->currency->currency_symbol.$product['servicePrice'] }}</td>
                                                 <td>
                                                     <div class="qty-wrap">
@@ -193,6 +195,40 @@
                                 </div>
                             </div>
                         </div>
+
+
+                        {{-- kolom PERKIRAAN WAKTU --}}
+                        @if ($bookingDetails)
+                        <div class="cart-block" style="margin-top: 20px">
+                            <div class="final-cart">
+                                <h5>Perkiraan Waktu</h5>
+                                
+                            {{--</div>--}}
+                                
+
+                                <div class="cart-value">
+                                    <ul>
+                                        <li>
+                                            <span>
+                                                Mulai
+                                            </span>
+                                            <span id="sub-total">
+                                                {{ !is_null($bookingDetails) ? $bookingDetails['bookingTime'] : 0 }}
+                                            </span>
+                                        </li>
+                                        <li id="totalAmountBox">
+                                            <span>
+                                                Selesai
+                                            </span>
+                                            <span id="total">
+                                                {{ $totalWaktu ? $totalWaktu.':00' : 0 }}
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
                 @if (!is_null($products))

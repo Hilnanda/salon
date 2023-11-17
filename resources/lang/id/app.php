@@ -2,6 +2,7 @@
 
 return array (
   'service' => 'Layanan',
+  'detailProduct' => 'Detail Produk',
   'name' => 'Nama Pengguna',
   'price' => 'Harga',
   'time' => 'Waktu',

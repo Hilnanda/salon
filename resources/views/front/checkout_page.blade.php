@@ -38,16 +38,16 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <span>@lang('front.registration.firstName') <sup class="text-danger">*</sup></span>
-                                            <input type="text" name="first_name" class="form-control" placeholder="@lang('front.registration.firstName')">
+                                            <span>@lang('front.registration.name') <sup class="text-danger">*</sup></span>
+                                            <input type="text" name="first_name" class="form-control" placeholder="@lang('front.registration.name')">
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    {{-- <div class="col-12">
                                         <div class="form-group">
                                             <span>@lang('front.registration.lastName') <sup class="text-danger">*</sup></span>
                                             <input type="text" name="last_name" class="form-control" placeholder="@lang('front.registration.lastName')">
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-12">
                                         <div class="form-group">
                                             <span>@lang('front.registration.email') <sup class="text-danger">*</sup></span>
@@ -58,7 +58,7 @@
                                         <div class="form-group">
                                             <span>@lang('front.registration.phoneNumber') <sup class="text-danger">*</sup></span>
                                             <div class="form-row">
-                                                <div class="col-sm-4">
+                                                {{-- <div class="col-sm-4">
                                                     <select name="calling_code" id="calling_code" class="form-control select2">
                                                         @foreach ($calling_codes as $code => $value)
                                                             <option value="{{ $value['dial_code'] }}"
@@ -67,8 +67,8 @@
                                                             @endif>{{ $value['dial_code'] . ' - ' . $value['name'] }}</option>
                                                         @endforeach
                                                     </select>
-                                                </div>
-                                                <div class="col-sm-8">
+                                                </div> --}}
+                                                <div class="col-sm-12">
                                                     <input type="text" name="phone" class="form-control" placeholder="@lang('front.registration.phoneNumber')">
                                                 </div>
                                                 @if ($smsSettings->nexmo_status == 'active')
@@ -83,7 +83,11 @@
                             </form>
                             <div class="row">
                                 <div class="col-12">
-                                    <p class="c-theme">** @lang('front.accountCreateNotice')</p>
+                                    <p class="c-theme">** @lang('front.accountCreateNotice') <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @lang('front.accountUserNotice1') <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @lang('front.accountUserNotice2')
+                                    
+                                    </p>
                                 </div>
                             </div>
                         </div>

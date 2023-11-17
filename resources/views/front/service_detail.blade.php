@@ -68,16 +68,24 @@
                             </div>
                         @else
                             <div class="detail-image mb-30">
-                                <img src="{{ $service->service_image_url }}" alt="service">
+                                {{-- <img src="{{ $service->service_image_url }}" alt="service"> --}}
                             </div>
                         @endif
                         <div class="content">
-                            {!! $service->description !!}
+                            {{-- {!! $service->description !!} --}}
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-12 col-xs-12 mb-60">
                         <div class="detail-info mb-5">
                             <ul>
+                                <li>
+                                    <span>
+                                        @lang('app.detailProduct') 
+                                    </span>
+                                    <span>
+                                        {!! $service->description !!}
+                                    </span>
+                                </li>
                                 <li>
                                     <span>
                                         @lang('app.service') @lang('app.name')

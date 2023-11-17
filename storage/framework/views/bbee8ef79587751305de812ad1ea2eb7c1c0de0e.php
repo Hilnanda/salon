@@ -36,16 +36,11 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <span><?php echo app('translator')->getFromJson('front.registration.firstName'); ?> <sup class="text-danger">*</sup></span>
-                                            <input type="text" name="first_name" class="form-control" placeholder="<?php echo app('translator')->getFromJson('front.registration.firstName'); ?>">
+                                            <span><?php echo app('translator')->getFromJson('front.registration.name'); ?> <sup class="text-danger">*</sup></span>
+                                            <input type="text" name="first_name" class="form-control" placeholder="<?php echo app('translator')->getFromJson('front.registration.name'); ?>">
                                         </div>
                                     </div>
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <span><?php echo app('translator')->getFromJson('front.registration.lastName'); ?> <sup class="text-danger">*</sup></span>
-                                            <input type="text" name="last_name" class="form-control" placeholder="<?php echo app('translator')->getFromJson('front.registration.lastName'); ?>">
-                                        </div>
-                                    </div>
+                                    
                                     <div class="col-12">
                                         <div class="form-group">
                                             <span><?php echo app('translator')->getFromJson('front.registration.email'); ?> <sup class="text-danger">*</sup></span>
@@ -56,18 +51,8 @@
                                         <div class="form-group">
                                             <span><?php echo app('translator')->getFromJson('front.registration.phoneNumber'); ?> <sup class="text-danger">*</sup></span>
                                             <div class="form-row">
-                                                <div class="col-sm-4">
-                                                    <select name="calling_code" id="calling_code" class="form-control select2">
-                                                        <?php $__currentLoopData = $calling_codes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $code => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                            <option value="<?php echo e($value['dial_code']); ?>"
-                                                            <?php if(!is_null($user) && $user->calling_code): ?>
-                                                                <?php echo e($user->calling_code == $value['dial_code'] ? 'selected' : ''); ?>
-
-                                                            <?php endif; ?>><?php echo e($value['dial_code'] . ' - ' . $value['name']); ?></option>
-                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                    </select>
-                                                </div>
-                                                <div class="col-sm-8">
+                                                
+                                                <div class="col-sm-12">
                                                     <input type="text" name="phone" class="form-control" placeholder="<?php echo app('translator')->getFromJson('front.registration.phoneNumber'); ?>">
                                                 </div>
                                                 <?php if($smsSettings->nexmo_status == 'active'): ?>
@@ -82,7 +67,11 @@
                             </form>
                             <div class="row">
                                 <div class="col-12">
-                                    <p class="c-theme">** <?php echo app('translator')->getFromJson('front.accountCreateNotice'); ?></p>
+                                    <p class="c-theme">** <?php echo app('translator')->getFromJson('front.accountCreateNotice'); ?> <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <?php echo app('translator')->getFromJson('front.accountUserNotice1'); ?> <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <?php echo app('translator')->getFromJson('front.accountUserNotice2'); ?>
+                                    
+                                    </p>
                                 </div>
                             </div>
                         </div>

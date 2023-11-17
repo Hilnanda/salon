@@ -40,10 +40,13 @@ return array (
   array (
     'firstName' => 'First Name',
     'lastName' => 'Last Name',
+    'name' => 'Name',
     'email' => 'Email',
     'phoneNumber' => 'Phone Number',
   ),
   'accountCreateNotice' => 'Note: Your account will be created automatically.',
+  'accountUserNotice1' => 'Your name becomes USERNAME.',
+  'accountUserNotice2' => 'Your phone number becomes your PASSWORD.',
   'bookingDate' => 'Booking Date',
   'bookingTime' => 'Booking Time',
   'amountToPay' => 'Amount to pay',

@@ -40,7 +40,10 @@
                                 </div>
 
                                 <!-- text input -->
-                                
+                                <div class="form-group">
+                                    <label><?php echo app('translator')->getFromJson('app.email'); ?></label>
+                                    <input type="email" class="form-control form-control-lg" name="email" value="" autocomplete="off">
+                                </div>
 
                                 <!-- text input -->
                                 <div class="form-group">

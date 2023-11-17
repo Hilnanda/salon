@@ -136,12 +136,7 @@
                     <?php $__currentLoopData = $services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="col-lg-3 col-md-6 col-12 mb-30 services-list service-category-<?php echo e($service->category_id); ?>">
                             <div class="listing-item">
-                                <div class="img-holder" style="background-image: url('<?php echo e($service->service_image_url); ?>')">
-                                    <div class="category-name">
-                                        <i class="flaticon-fork mr-1"></i><?php echo e(ucwords($service->category->name)); ?>
-
-                                    </div>
-                                </div>
+                                
                                 <div class="list-content">
                                     <h5 class="mb-2">
                                         <a href="<?php echo e($service->service_detail_url); ?>"><?php echo e(ucwords($service->name)); ?></a>
@@ -256,12 +251,13 @@
 
                         if (response.services.length > 0) {
                             response.services.forEach(service => {
+                                console.log(service.service_detail_url)
                                 services += `
                                     <div class="col-lg-3 col-md-6 col-12 mb-30 services-list service-category-${service.category_id}">
                                         <div class="listing-item">
-                                            <div class="img-holder" style="background-image: url('${ service.service_image_url }')">
-                                                <div class="category-name">
-                                                    <i class="flaticon-fork mr-1"></i>${service.category.name}
+                                                <div class="img-holder">
+                                                <div style="text-align:center;margin-top:10px">
+                                                    <span><b>${service.category.name.toUpperCase()}</b></span>
                                                 </div>
                                                 <div class="time-remaining">
                                                     <i class="fa fa-clock-o mr-2"></i>
@@ -285,6 +281,8 @@
                                                         data-service-price="${service.discounted_price}"
                                                         data-service-id="${service.id}"
                                                         data-service-name="${service.name}"
+                                                        data-service-time="${service.time} ${makeSingular(service.time, service.time_type)}"
+                                                        data-service-url="${service.service_detail_url}"
                                                         aria-expanded="false">
                                                                 <?php echo app('translator')->getFromJson('app.add'); ?>
                                                                 <span class="fa fa-plus"></span>
@@ -327,8 +325,10 @@
             let serviceId = $(this).data('service-id');
             let servicePrice = $(this).data('service-price');
             let serviceName = $(this).data('service-name');
+            let serviceTime = $(this).data('service-time');
+            let serviceUrl = $(this).data('service-url');
 
-            var data = {serviceId, servicePrice, serviceName, '_token': $("meta[name='csrf-token']").attr('content')};
+            var data = {serviceId, serviceTime,servicePrice, serviceName, '_token': $("meta[name='csrf-token']").attr('content')};
 
             $.easyAjax({
                 url: '<?php echo e(route('front.addOrUpdateProduct')); ?>',
@@ -336,6 +336,7 @@
                 data: data,
                 success: function (response) {
                     $('.cart-badge').text(response.productsCount);
+                    window.location.href = serviceUrl;
                 }
             })
         });

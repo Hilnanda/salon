@@ -914,7 +914,7 @@ input:focus {
 
     background-repeat: no-repeat;
     background-size: cover;
-    height: 240px;
+    height: 70px;
 }
 
 .list-content {
@@ -923,7 +923,7 @@ input:focus {
 
 .list-content p{
     font-size: 13px;
-    min-height: 70px;
+    min-height: 80px;
 }
 
 .listing-item a,

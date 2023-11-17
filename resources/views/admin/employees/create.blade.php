@@ -45,10 +45,10 @@
                                 </div>
 
                                 <!-- text input -->
-                                {{-- <div class="form-group">
+                                <div class="form-group">
                                     <label>@lang('app.email')</label>
                                     <input type="email" class="form-control form-control-lg" name="email" value="" autocomplete="off">
-                                </div> --}}
+                                </div>
 
                                 <!-- text input -->
                                 <div class="form-group">

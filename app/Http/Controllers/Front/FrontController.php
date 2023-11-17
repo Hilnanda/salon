@@ -94,12 +94,13 @@ class FrontController extends Controller
     {
         $newProduct = [
             "servicePrice" => $request->servicePrice,
-            "serviceName" => $request->serviceName
+            "serviceName" => $request->serviceName,
+            "serviceTime" => $request->serviceTime
         ];
-
+        
         $products = [];
         $serviceQuantity = $request->serviceQuantity ?? 1;
-
+        
         if (!$request->hasCookie('products')) {
             $newProduct = Arr::add($newProduct, 'serviceQuantity', $serviceQuantity);
             $products = Arr::add($products, $request->serviceId, $newProduct);
@@ -165,12 +166,67 @@ class FrontController extends Controller
 
     public function cartPage(Request $request)
     {
+        $totalWaktu = [];
         $products       = json_decode($request->cookie('products'), true);
         $bookingDetails = json_decode($request->cookie('bookingDetails'), true);
         $couponData     = json_decode($request->cookie('couponData'), true);
         $tax = TaxSetting::active()->first();
+        // dd($products);
+        if($bookingDetails) {
 
-        return view('front.cart_page', compact('products', 'bookingDetails', 'tax', 'couponData'));
+        
+        $waktuMulai = $bookingDetails['bookingTime'];
+        
+        $totalJam = 0;
+        $totalMenit = 0;
+
+        foreach ($products as $item) {
+            // Ambil jumlah menit dari waktu
+            $menit = $this->getMinutesFromTime($item["serviceTime"]);
+
+            // Tambahkan menit ke total
+            $totalMenit += $menit;
+        }
+
+        // Tambahkan total menit ke total jam
+        $totalJam += floor($totalMenit / 60);
+        $totalMenit = $totalMenit % 60;
+
+        // Format hasil
+        $totalWaktuProduk = sprintf("%02d:%02d", $totalJam, $totalMenit);
+
+        // Tambahkan durasi produk dengan waktu mulai
+        $totalWaktu = $this->addTimes($waktuMulai, $totalWaktuProduk);
+
+        // dd($totalWaktu);
+        }
+
+        return view('front.cart_page', compact('products', 'bookingDetails', 'tax', 'couponData','totalWaktu'));
+    }
+    private function addTimes($time1, $time2)
+    {
+        $time1 = explode(":", $time1);
+        $time2 = explode(":", $time2);
+
+        $hours = (int)$time1[0] + (int)$time2[0];
+        $minutes = (int)$time1[1] + (int)$time2[1];
+
+        $hours += floor($minutes / 60);
+        $minutes = $minutes % 60;
+
+        return sprintf("%02d:%02d", $hours, $minutes);
+    }
+
+    // Fungsi untuk mendapatkan jumlah menit dari waktu dalam format "X menit" atau "X Jam"
+    private function getMinutesFromTime($time)
+    {
+        preg_match('/(\d+)\s*Jam/', $time, $jamMatches);
+        preg_match('/(\d+)\s*menit/', $time, $menitMatches);
+
+        $jam = !empty($jamMatches[1]) ? (int)$jamMatches[1] : 0;
+        $menit = !empty($menitMatches[1]) ? (int)$menitMatches[1] : 0;
+
+        return ($jam * 60) + $menit;
     }
 
     public function deleteProduct(Request $request, $id)
@@ -362,11 +418,11 @@ class FrontController extends Controller
             $user = $this->user;
         } else {
             $user = User::firstOrNew(['email' => $request->email]);
-            $user->name = $request->first_name . ' ' . $request->last_name;
+            $user->name = $request->first_name;
             $user->email = $request->email;
             $user->mobile = $request->phone;
-            $user->calling_code = $request->calling_code;
-            $user->password = '123456';
+            $user->calling_code = '+62';
+            $user->password = $request->phone;
             $user->save();
 
             $user->attachRole(Role::where('name', 'customer')->withoutGlobalScopes()->first()->id);
@@ -379,7 +435,7 @@ class FrontController extends Controller
                 return response(Reply::redirect(route('front.checkoutPage'), __('messages.front.success.userCreated')));
             }
 
-            $user->notify(new NewUser('123456'));
+            $user->notify(new NewUser($request->phone));
         }
 
         // get products and bookingDetails

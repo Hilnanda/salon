@@ -28,10 +28,8 @@ class StoreFrontBooking extends CoreRequest
         if(auth()->guest()){
             $rules = [
                 'first_name' => 'required',
-                'last_name' => 'required',
                 'email' => 'required|email|unique:users,email',
                 'phone' => 'required',
-                'calling_code' => 'required_with:phone'
             ];
         }
 

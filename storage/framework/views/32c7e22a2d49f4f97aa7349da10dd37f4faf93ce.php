@@ -47,6 +47,7 @@
                                 <thead>
                                 <tr>
                                     <th><?php echo app('translator')->getFromJson('front.table.headings.serviceName'); ?></th>
+                                    <th>Duration</th>
                                     <th><?php echo app('translator')->getFromJson('front.table.headings.unitPrice'); ?></th>
                                     <th><?php echo app('translator')->getFromJson('front.table.headings.quantity'); ?></th>
                                     <th><?php echo app('translator')->getFromJson('front.table.headings.subTotal'); ?></th>
@@ -61,6 +62,7 @@
                                         <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <tr id="<?php echo e($key); ?>">
                                                 <td><?php echo e($product['serviceName']); ?></td>
+                                                <td><?php echo e($product['serviceTime'] ?? '-'); ?></td>
                                                 <td><?php echo e($settings->currency->currency_symbol.$product['servicePrice']); ?></td>
                                                 <td>
                                                     <div class="qty-wrap">
@@ -195,6 +197,42 @@
                                 </div>
                             </div>
                         </div>
+
+
+                        
+                        <?php if($bookingDetails): ?>
+                        <div class="cart-block" style="margin-top: 20px">
+                            <div class="final-cart">
+                                <h5>Perkiraan Waktu</h5>
+                                
+                            
+                                
+
+                                <div class="cart-value">
+                                    <ul>
+                                        <li>
+                                            <span>
+                                                Mulai
+                                            </span>
+                                            <span id="sub-total">
+                                                <?php echo e(!is_null($bookingDetails) ? $bookingDetails['bookingTime'] : 0); ?>
+
+                                            </span>
+                                        </li>
+                                        <li id="totalAmountBox">
+                                            <span>
+                                                Selesai
+                                            </span>
+                                            <span id="total">
+                                                <?php echo e($totalWaktu ? $totalWaktu.':00' : 0); ?>
+
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <?php if(!is_null($products)): ?>
