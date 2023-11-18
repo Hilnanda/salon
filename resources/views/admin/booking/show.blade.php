@@ -1,4 +1,31 @@
-<div class="row">
+<style>
+    /* Gaya CSS untuk membuat border kotak */
+    .container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .border-box {
+            width: 270px;
+            /* height: 300px; */
+            border: 2px solid #333;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .line {
+            width: 100%;
+            border-top: 2px solid #333;
+            /* margin: 20px auto; */
+        }
+
+        .hidden-fitur {
+            display: none;
+        }
+        
+</style>
+
+<div class="row" >
+    
     <div class="col-md-12 text-right mt-2 mb-2">
         @if ($user->can('update_booking'))
         <button class="btn btn-sm btn-outline-primary edit-booking" data-booking-id="{{ $booking->id }}" type="button"><i class="fa fa-edit"></i> @lang('app.edit')</button>
@@ -15,15 +42,114 @@
             @endif
         @endif
     </div>
-
-    <div class="col-md-12 text-center mb-3">
-        <img src="{{ $booking->user->user_image_url }}" class="border img-bordered-sm img-circle" height="70em" width="70em">
-        <h6 class="text-uppercase mt-2">{{ ucwords($booking->user->name) }}</h6>
+    
+    <div class="container">
+        <!-- Kotak dengan Border di Tengah -->
+        <div class="border-box">
+            <!-- Isi konten di sini -->
+            <div class="row" >
+                <div class="col-md-12" style="text-align: center">
+                    <img src="{{ asset('user-uploads/logo/logo.png') }}"  height="150em" width="150em">
+                    <div class="row">
+                        <div class="col-md-6" style="text-align: left">
+                            <b>{{ $booking->date_time->format($settings->date_format) }}</b>
+                        </div>
+                        <div class="col-md-6">
+                            <b>{{ $booking->date_time->format($settings->time_format) }}</b>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <table>
+                        <tr>
+                            <td>Nama Kasir </td>
+                            <td> : </td>
+                            <td>
+                                @if(count($booking->users)>0)
+                                @foreach ($booking->users as $user)
+                                {{$user->name}}
+                                @endforeach
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Cabang</td>
+                            <td> : </td>
+                            <td>Sukabumi</td>
+                        </tr>
+                    </table>
+                    <hr class="line">
+                    
+                </div>
+                <div class="col-md-6" style="text-align: center"><b>Layanan</b></div>
+                <div class="col-md-6" style="text-align: center"><b>Harga</b></div>
+                <div class="col-md-12">
+                    <hr class="line">
+                </div>
+                <div class="col-md-12">
+                    <table style="border-collapse: collapse;width: 100%;">
+                        @foreach($booking->items as $key=>$item)
+                        <tr>
+                            <td style="text-align: left">{{ ucwords($item->businessService->name) }}</td>
+                            <td style="text-align: right" style="text-align: center">{{ $settings->currency->currency_symbol.number_format((float)$item->unit_price, 2) }}</td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
+                
+                <div class="col-md-12">
+                    <hr class="line">
+                    <table style="border-collapse: collapse;width: 100%;">
+                        <tr>
+                            <td style="text-align: right">TOTAL</td>
+                            <td style="text-align: right">{{ $settings->currency->currency_symbol.number_format((float)$booking->original_amount, 2) }}</td>
+                        </tr>
+                        @if($booking->discount > 0)
+                        <tr>
+                            <td style="text-align: right">@lang('app.discount')</td>
+                            <td style="text-align: right">{{ $settings->currency->currency_symbol.number_format((float)$booking->discount, 2) }}</td>
+                        </tr>
+                        @endif
+                        @if($booking->tax_amount > 0)
+                        <tr>
+                            <td style="text-align: right">{{ $booking->tax_name.' ('.$booking->tax_percent.'%)' }}</td>
+                            <td style="text-align: right">{{ $settings->currency->currency_symbol.number_format((float)$booking->tax_amount, 2, '.', '') }}</td>
+                        </tr>
+                        @endif
+                        @if($booking->coupon_discount > 0)
+                        <tr>
+                            <td style="text-align: right" >@lang('app.couponDiscount') (<a href="javascript:;" onclick="showCoupon();" class="show-coupon">{{ $booking->coupon->title}}</a>)</td>
+                            <td style="text-align: right">{{ $settings->currency->currency_symbol.number_format((float)$booking->coupon_discount, 2, '.', '') }}</td>
+                        </tr>
+                        @endif 
+                        
+                    </table>
+                    <hr class="line">
+                    <table style="border-collapse: collapse;width: 100%">
+                        <tr>
+                            <td style="text-align: right"><b>Grand Total</b></td>
+                            <td style="text-align: right">{{ $settings->currency->currency_symbol.number_format((float)$booking->amount_to_pay, 2) }}</td>
+                        </tr>
+                    </table>
+                    <hr class="line">
+                    <p>TERIMAKASIH TELAH MENGGUNAKAN JASA KAMI. SEHAT SELALU YA KAK..</p>
+                </div>
+                
+            </div>
+        </div>
     </div>
+    {{-- <div class="col-md-12 text-center mb-3">
+        
+        <h6 class="text-uppercase mt-2">{{ ucwords($booking->user->name) }}</h6>
+    </div> --}}
 
 </div>
 
-<div class="row">
+<div class="row hidden-fitur" style="margin-top: 30px">
+    <div style="text-align: center" class="col-md-12">
+        <h3><b>DETAIL INVOICE</b></h3>
+    </div>
     <div class="col-md-6 border-right"> <strong>@lang('app.email')</strong> <br>
         <p class="text-muted"><i class="icon-email"></i> {{ $booking->user->email ?? '--' }}</p>
     </div>
@@ -31,8 +157,8 @@
         <p class="text-muted"><i class="icon-mobile"></i> {{ $booking->user->mobile ? $booking->user->formatted_mobile : '--' }}</p>
     </div>
 </div>
-<hr>
-<div class="row">
+{{-- <hr> --}}
+<div class="row hidden-fitur">
     <div class="col-sm-4 border-right"> <strong>@lang('app.booking') @lang('app.date')</strong> <br>
         <p class="text-primary"><i class="icon-calendar"></i> {{ $booking->date_time->format($settings->date_format) }}</p>
     </div>
@@ -49,10 +175,10 @@
          badge-pill">{{ __('app.'.$booking->status) }}</span>
     </div>
 </div>
-<hr>
+{{-- <hr> --}}
 
 @if(count($booking->users)>0)
-<div class="row">
+<div class="row hidden-fitur">
     <div class="col-sm-12"> <strong>@lang('menu.employee') </strong> <br>
         <p class="text-primary" style="margin: 0.2em">
             @foreach ($booking->users as $user)
@@ -61,10 +187,10 @@
         </p>
     </div>
 </div>
-<hr>
+{{-- <hr> --}}
 @endif
 
-<div class="row">
+<div class="row hidden-fitur">
     <div class="col-md-12">
         <table class="table table-condensed">
             <thead class="bg-secondary">
@@ -213,7 +339,11 @@
     </div>
     {{--coupon detail Modal Ends--}}
 </div>
+
+
+
 <script>
+    
     @if($booking->coupon_discount > 0)
         function showCoupon () {
             var url = '{{ route('admin.coupons.show', $booking->coupon_id)}}';
@@ -313,6 +443,7 @@
                 redirect: true
             });
         }
-
+        
     </script>
+    
 @endif

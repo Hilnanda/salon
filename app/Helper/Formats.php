@@ -35,6 +35,12 @@ class Formats
         ];
     }
 
+    function format_money($number)
+    {
+        $result = number_format($number,2);
+        return $result;
+    }
+
     public static function datePickerFormats()
     {
         // below array is the association of date format with bootstrap datepicker format

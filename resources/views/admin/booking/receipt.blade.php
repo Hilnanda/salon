@@ -263,7 +263,7 @@
             <td>
                 <div id="invoiced_to">
                     <small>@lang("modules.booking.billedTo"):</small>
-                    <h3 class="name">{{ ucwords($booking->user->name) }}</h3>
+                    <h3 class="name">{{ ucwords($booking->user->name) }}s</h3>
                 </div>
             </td>
             <td>

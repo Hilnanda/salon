@@ -1,4 +1,31 @@
-<div class="row">
+<style>
+    /* Gaya CSS untuk membuat border kotak */
+    .container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .border-box {
+            width: 270px;
+            /* height: 300px; */
+            border: 2px solid #333;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .line {
+            width: 100%;
+            border-top: 2px solid #333;
+            /* margin: 20px auto; */
+        }
+
+        .hidden-fitur {
+            display: none;
+        }
+        
+</style>
+
+<div class="row" >
+    
     <div class="col-md-12 text-right mt-2 mb-2">
         <?php if($user->can('update_booking')): ?>
         <button class="btn btn-sm btn-outline-primary edit-booking" data-booking-id="<?php echo e($booking->id); ?>" type="button"><i class="fa fa-edit"></i> <?php echo app('translator')->getFromJson('app.edit'); ?></button>
@@ -15,15 +42,112 @@
             <?php endif; ?>
         <?php endif; ?>
     </div>
+    
+    <div class="container">
+        <!-- Kotak dengan Border di Tengah -->
+        <div class="border-box">
+            <!-- Isi konten di sini -->
+            <div class="row" >
+                <div class="col-md-12" style="text-align: center">
+                    <img src="<?php echo e(asset('user-uploads/logo/logo.png')); ?>"  height="150em" width="150em">
+                    <div class="row">
+                        <div class="col-md-6" style="text-align: left">
+                            <b><?php echo e($booking->date_time->format($settings->date_format)); ?></b>
+                        </div>
+                        <div class="col-md-6">
+                            <b><?php echo e($booking->date_time->format($settings->time_format)); ?></b>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <table>
+                        <tr>
+                            <td>Nama Kasir </td>
+                            <td> : </td>
+                            <td>
+                                <?php if(count($booking->users)>0): ?>
+                                <?php $__currentLoopData = $booking->users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo e($user->name); ?>
 
-    <div class="col-md-12 text-center mb-3">
-        <img src="<?php echo e($booking->user->user_image_url); ?>" class="border img-bordered-sm img-circle" height="70em" width="70em">
-        <h6 class="text-uppercase mt-2"><?php echo e(ucwords($booking->user->name)); ?></h6>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Cabang</td>
+                            <td> : </td>
+                            <td>Sukabumi</td>
+                        </tr>
+                    </table>
+                    <hr class="line">
+                    
+                </div>
+                <div class="col-md-6" style="text-align: center"><b>Layanan</b></div>
+                <div class="col-md-6" style="text-align: center"><b>Harga</b></div>
+                <div class="col-md-12">
+                    <hr class="line">
+                </div>
+                <div class="col-md-12">
+                    <table style="border-collapse: collapse;width: 100%;">
+                        <?php $__currentLoopData = $booking->items; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <tr>
+                            <td style="text-align: left"><?php echo e(ucwords($item->businessService->name)); ?></td>
+                            <td style="text-align: right" style="text-align: center"><?php echo e($settings->currency->currency_symbol.number_format((float)$item->unit_price, 2)); ?></td>
+                        </tr>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </table>
+                </div>
+                
+                <div class="col-md-12">
+                    <hr class="line">
+                    <table style="border-collapse: collapse;width: 100%;">
+                        <tr>
+                            <td style="text-align: right">TOTAL</td>
+                            <td style="text-align: right"><?php echo e($settings->currency->currency_symbol.number_format((float)$booking->original_amount, 2)); ?></td>
+                        </tr>
+                        <?php if($booking->discount > 0): ?>
+                        <tr>
+                            <td style="text-align: right"><?php echo app('translator')->getFromJson('app.discount'); ?></td>
+                            <td style="text-align: right"><?php echo e($settings->currency->currency_symbol.number_format((float)$booking->discount, 2)); ?></td>
+                        </tr>
+                        <?php endif; ?>
+                        <?php if($booking->tax_amount > 0): ?>
+                        <tr>
+                            <td style="text-align: right"><?php echo e($booking->tax_name.' ('.$booking->tax_percent.'%)'); ?></td>
+                            <td style="text-align: right"><?php echo e($settings->currency->currency_symbol.number_format((float)$booking->tax_amount, 2, '.', '')); ?></td>
+                        </tr>
+                        <?php endif; ?>
+                        <?php if($booking->coupon_discount > 0): ?>
+                        <tr>
+                            <td style="text-align: right" ><?php echo app('translator')->getFromJson('app.couponDiscount'); ?> (<a href="javascript:;" onclick="showCoupon();" class="show-coupon"><?php echo e($booking->coupon->title); ?></a>)</td>
+                            <td style="text-align: right"><?php echo e($settings->currency->currency_symbol.number_format((float)$booking->coupon_discount, 2, '.', '')); ?></td>
+                        </tr>
+                        <?php endif; ?> 
+                        
+                    </table>
+                    <hr class="line">
+                    <table style="border-collapse: collapse;width: 100%">
+                        <tr>
+                            <td style="text-align: right"><b>Grand Total</b></td>
+                            <td style="text-align: right"><?php echo e($settings->currency->currency_symbol.number_format((float)$booking->amount_to_pay, 2)); ?></td>
+                        </tr>
+                    </table>
+                    <hr class="line">
+                    <p>TERIMAKASIH TELAH MENGGUNAKAN JASA KAMI. SEHAT SELALU YA KAK..</p>
+                </div>
+                
+            </div>
+        </div>
     </div>
+    
 
 </div>
 
-<div class="row">
+<div class="row hidden-fitur" style="margin-top: 30px">
+    <div style="text-align: center" class="col-md-12">
+        <h3><b>DETAIL INVOICE</b></h3>
+    </div>
     <div class="col-md-6 border-right"> <strong><?php echo app('translator')->getFromJson('app.email'); ?></strong> <br>
         <p class="text-muted"><i class="icon-email"></i> <?php echo e($booking->user->email ?? '--'); ?></p>
     </div>
@@ -31,8 +155,8 @@
         <p class="text-muted"><i class="icon-mobile"></i> <?php echo e($booking->user->mobile ? $booking->user->formatted_mobile : '--'); ?></p>
     </div>
 </div>
-<hr>
-<div class="row">
+
+<div class="row hidden-fitur">
     <div class="col-sm-4 border-right"> <strong><?php echo app('translator')->getFromJson('app.booking'); ?> <?php echo app('translator')->getFromJson('app.date'); ?></strong> <br>
         <p class="text-primary"><i class="icon-calendar"></i> <?php echo e($booking->date_time->format($settings->date_format)); ?></p>
     </div>
@@ -49,10 +173,10 @@
          badge-pill"><?php echo e(__('app.'.$booking->status)); ?></span>
     </div>
 </div>
-<hr>
+
 
 <?php if(count($booking->users)>0): ?>
-<div class="row">
+<div class="row hidden-fitur">
     <div class="col-sm-12"> <strong><?php echo app('translator')->getFromJson('menu.employee'); ?> </strong> <br>
         <p class="text-primary" style="margin: 0.2em">
             <?php $__currentLoopData = $booking->users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -62,10 +186,10 @@
         </p>
     </div>
 </div>
-<hr>
+
 <?php endif; ?>
 
-<div class="row">
+<div class="row hidden-fitur">
     <div class="col-md-12">
         <table class="table table-condensed">
             <thead class="bg-secondary">
@@ -215,7 +339,11 @@
     </div>
     
 </div>
+
+
+
 <script>
+    
     <?php if($booking->coupon_discount > 0): ?>
         function showCoupon () {
             var url = '<?php echo e(route('admin.coupons.show', $booking->coupon_id)); ?>';
@@ -315,7 +443,8 @@
                 redirect: true
             });
         }
-
+        
     </script>
+    
 <?php endif; ?>
 <?php /**PATH G:\Pekerjaan\Simetris\salon\salon\resources\views/admin/booking/show.blade.php ENDPATH**/ ?>
