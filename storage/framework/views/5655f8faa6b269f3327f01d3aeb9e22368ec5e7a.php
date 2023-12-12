@@ -136,12 +136,7 @@
                     <?php $__currentLoopData = $services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="col-lg-3 col-md-6 col-12 mb-30 services-list service-category-<?php echo e($service->category_id); ?>">
                             <div class="listing-item">
-                                <!-- <div class="img-holder" style="background-image: url('<?php echo e($service->service_image_url); ?>')">
-                                    <div class="category-name">
-                                        <i class="flaticon-fork mr-1"></i><?php echo e(ucwords($service->category->name)); ?>
-
-                                    </div>
-                                </div> -->
+                                
                                 <div class="list-content">
                                     <h5 class="mb-2">
                                         <a href="<?php echo e($service->service_detail_url); ?>"><?php echo e(ucwords($service->name)); ?></a>
@@ -259,9 +254,9 @@
                                 services += `
                                     <div class="col-lg-3 col-md-6 col-12 mb-30 services-list service-category-${service.category_id}">
                                         <div class="listing-item">
-                                            <div class="img-holder" style="background-image: url('${ service.service_image_url }')">
-                                                <div class="category-name">
-                                                    <i class="flaticon-fork mr-1"></i>${service.category.name}
+                                            <div class="img-holder">
+                                                <div style="text-align:center;margin-top:10px">
+                                                    <span><b>${service.category.name.toUpperCase()}</b></span>
                                                 </div>
                                                 <div class="time-remaining">
                                                     <i class="fa fa-clock-o mr-2"></i>
