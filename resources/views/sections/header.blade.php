@@ -205,7 +205,7 @@
                             if (response.services.length > 0) {
                                 response.services.forEach(service => {
                                     var defaultAsset = '{{ asset('assets/img/pl-slide1.jpg') }}';
-                                    var asset = "{{ asset('user-uploads/service/').'/' }}"+service.id+'/'+service.default_image;
+                                    var asset = """;
                                     var url = service.image ?  asset : defaultAsset;
 
                                     services += `

@@ -28,7 +28,7 @@
                                     @forelse($service->image as $image)
                                         <div class="carousel-item {{ $service->service_image_url == asset_url('service/'.$service->id.'/'.$image) ? 'active' : '' }}">
                                             <a href="javascript:void(0);">
-                                                <img class="img-fluid" src="{{ asset('user-uploads/service/'.$service->id.'/'.$image) }}" alt="carousel image">
+                                                {{-- <img class="img-fluid" src="{{ asset('user-uploads/service/'.$service->id.'/'.$image) }}" alt="carousel image"> --}}
                                             </a>
                                         </div>
                                         @php $count++ @endphp
