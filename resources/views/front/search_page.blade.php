@@ -32,14 +32,14 @@
                         <div class="col-lg-4 col-md-6 col-12 mb-30 services-list service-category-{{ $item->category_id }}">
                             <div class="listing-item">
                                 <div class="img-holder">
-                                    <img src="{{ $item->image ? asset('user-uploads/service/'.$item->id.'/'.$item->default_image) : asset('assets/img/pl-slide1.jpg') }}" alt="list">
+                                    {{-- <img src="{{ $item->image ? asset('user-uploads/service/'.$item->id.'/'.$item->default_image) : asset('assets/img/pl-slide1.jpg') }}" alt="list">
                                     <div class="category-name">
                                         <i class="flaticon-fork mr-1"></i>{{ ucwords($item->category->name) }}
                                     </div>
                                     <div class="time-remaining">
                                         <i class="fa fa-clock-o mr-2"></i>
                                         <span data-service="{{ $item }}"></span>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <div class="list-content">
                                     <h5 class="mb-2">
