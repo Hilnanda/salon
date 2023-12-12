@@ -212,14 +212,7 @@
                                     services += `
                                     <div class="col-lg-4 col-md-6 col-12 mb-30 services-list service-category-${service.category_id}">
                                         <div class="listing-item">
-                                            <div class="img-holder">
-                                                <img src="${url}" alt="list">
-                                                <div class="category-name">
-                                                    <a href="#" class="c-black">
-                                                        <i class="flaticon-fork mr-1"></i>${service.category.name}
-                                                    </a>
-                                                </div>
-                                            </div>
+                                            
                                             <div class="list-content">
                                                 <h5 class="mb-2">
                                                     <a href="${service.service_detail_url}">${service.name}</a>

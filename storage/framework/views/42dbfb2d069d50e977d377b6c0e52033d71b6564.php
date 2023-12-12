@@ -212,12 +212,13 @@
                                     services += `
                                     <div class="col-lg-4 col-md-6 col-12 mb-30 services-list service-category-${service.category_id}">
                                         <div class="listing-item">
-                                            <div class="img-holder">
-                                                <img src="${url}" alt="list">
-                                                <div class="category-name">
-                                                    <a href="#" class="c-black">
-                                                        <i class="flaticon-fork mr-1"></i>${service.category.name}
-                                                    </a>
+                                        <div class="img-holder">
+                                                <div style="text-align:center;margin-top:10px">
+                                                    <span><b>${service.category.name.toUpperCase()}</b></span>
+                                                </div>
+                                                <div class="time-remaining">
+                                                    <i class="fa fa-clock-o mr-2"></i>
+                                                    <span>${service.time} ${makeSingular(service.time, service.time_type)}</span>
                                                 </div>
                                             </div>
                                             <div class="list-content">
