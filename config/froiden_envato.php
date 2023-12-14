@@ -8,7 +8,7 @@ $envato_item_id = 22989501;
 // Product Url from codecanyon
 $productUrl = 'https://codecanyon.net/item/appointo-booking-management-system/22989501?ref=ajay138';
 
-$updatesDomain = 'https://localhost:8000';
+$updatesDomain = 'https://salonsws.simetrisdigitalagency.com/';
 
 $verifyDomain = 'https://envato.froid.works';
 
