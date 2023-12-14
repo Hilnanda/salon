@@ -51,25 +51,25 @@ class SettingController extends Controller
         $totalPermissions = Permission::count();
         $modules = Module::all();
 
-        $client = new Client();
-        $res = $client->request('GET', config('froiden_envato.updater_file_path'), ['verify' => false]);
-        $lastVersion = $res->getBody();
-        $lastVersion = json_decode($lastVersion, true);
-        $currentVersion = File::get('version.txt');
+        // $client = new Client();
+        // $res = $client->request('GET', config('froiden_envato.updater_file_path'), ['verify' => false]);
+        // $lastVersion = $res->getBody();
+        // $lastVersion = json_decode($lastVersion, true);
+        // $currentVersion = File::get('version.txt');
 
-        $description = $lastVersion['description'];
+        // $description = $lastVersion['description'];
 
-        $newUpdate = 0;
-        if (version_compare($lastVersion['version'], $currentVersion) > 0)
-        {
-            $newUpdate = 1;
-        }
-        $updateInfo = $description;
-        $lastVersion = $lastVersion['version'];
+        // $newUpdate = 0;
+        // if (version_compare($lastVersion['version'], $currentVersion) > 0)
+        // {
+        //     $newUpdate = 1;
+        // }
+        // $updateInfo = $description;
+        // $lastVersion = $lastVersion['version'];
 
-        $appVersion = File::get('version.txt');
-        $laravel = app();
-        $laravelVersion = $laravel::VERSION;
+        // $appVersion = File::get('version.txt');
+        // $laravel = app();
+        // $laravelVersion = $laravel::VERSION;
 
         return view('admin.settings.index', compact('bookingTimes', 'images', 'tax', 'timezones', 'dateFormats', 'timeFormats', 'dateObject', 'currencies', 'enabledLanguages', 'smtpSetting', 'lastVersion', 'updateInfo', 'appVersion', 'laravelVersion', 'newUpdate', 'credentialSetting', 'smsSetting', 'roles', 'totalPermissions', 'modules'));
     }
