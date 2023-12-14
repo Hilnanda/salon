@@ -45,9 +45,9 @@
                    data-toggle="tab">@lang('app.smsCredentials') @lang('menu.settings')</a>
                 <a class="nav-link" href="#update" data-toggle="tab">
                     @lang('menu.updateApp')
-                    @if($newUpdate == 1)
+                    {{-- @if($newUpdate == 1)
                         <span class="badge badge-success">{{ $lastVersion }}</span>
-                    @endif
+                    @endif --}}
 
                 </a>
             </div>
