@@ -183,14 +183,14 @@ class CurlFactory implements CurlFactoryInterface
                 'cURL error %s: %s (%s)',
                 $ctx['errno'],
                 $ctx['error'],
-                'see https://curl.haxx.se/libcurl/c/libcurl-errors.html'
+                // 'see https://curl.haxx.se/libcurl/c/libcurl-errors.html'
             );
         } else {
             $message = sprintf(
                 'cURL error %s: %s (%s) for %s',
                 $ctx['errno'],
                 $ctx['error'],
-                'see https://curl.haxx.se/libcurl/c/libcurl-errors.html',
+                // 'see https://curl.haxx.se/libcurl/c/libcurl-errors.html',
                 $easy->request->getUri()
             );
         }
