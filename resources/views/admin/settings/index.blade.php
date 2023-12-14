@@ -41,15 +41,15 @@
                 <a class="nav-link" href="#role-permission" data-toggle="tab">@lang('menu.rolesPermissions')</a>
                 <a class="nav-link" href="#payment"
                    data-toggle="tab">@lang('app.paymentCredential') @lang('menu.settings')</a>
-                <a class="nav-link" href="#sms-settings"
-                   data-toggle="tab">@lang('app.smsCredentials') @lang('menu.settings')</a>
-                <a class="nav-link" href="#update" data-toggle="tab">
+                {{-- <a class="nav-link" href="#sms-settings"
+                   data-toggle="tab">@lang('app.smsCredentials') @lang('menu.settings')</a> --}}
+                {{-- <a class="nav-link" href="#update" data-toggle="tab">
                     @lang('menu.updateApp')
-                    {{-- @if($newUpdate == 1)
+                    @if($newUpdate == 1)
                         <span class="badge badge-success">{{ $lastVersion }}</span>
-                    @endif --}}
+                    @endif
 
-                </a>
+                </a> --}}
             </div>
         </div>
         <div class="col-12 col-md-10">

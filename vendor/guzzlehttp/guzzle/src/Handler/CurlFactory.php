@@ -157,50 +157,50 @@ class CurlFactory implements CurlFactoryInterface
 
     private static function createRejection(EasyHandle $easy, array $ctx)
     {
-        // static $connectionErrors = [
-        //     CURLE_OPERATION_TIMEOUTED  => true,
-        //     CURLE_COULDNT_RESOLVE_HOST => true,
-        //     CURLE_COULDNT_CONNECT      => true,
-        //     CURLE_SSL_CONNECT_ERROR    => true,
-        //     CURLE_GOT_NOTHING          => true,
-        // ];
+        static $connectionErrors = [
+            CURLE_OPERATION_TIMEOUTED  => true,
+            CURLE_COULDNT_RESOLVE_HOST => true,
+            CURLE_COULDNT_CONNECT      => true,
+            CURLE_SSL_CONNECT_ERROR    => true,
+            CURLE_GOT_NOTHING          => true,
+        ];
 
-        // // If an exception was encountered during the onHeaders event, then
-        // // return a rejected promise that wraps that exception.
-        // if ($easy->onHeadersException) {
-        //     return \GuzzleHttp\Promise\rejection_for(
-        //         new RequestException(
-        //             'An error was encountered during the on_headers event',
-        //             $easy->request,
-        //             $easy->response,
-        //             $easy->onHeadersException,
-        //             $ctx
-        //         )
-        //     );
-        // }
-        // if (version_compare($ctx[self::CURL_VERSION_STR], self::LOW_CURL_VERSION_NUMBER)) {
-        //     $message = sprintf(
-        //         'cURL error %s: %s (%s)',
-        //         $ctx['errno'],
-        //         $ctx['error'],
-        //         ''
-        //     );
-        // } else {
-        //     $message = sprintf(
-        //         'cURL error %s: %s (%s) for %s',
-        //         $ctx['errno'],
-        //         $ctx['error'],
-        //         '',
-        //         $easy->request->getUri()
-        //     );
-        // }
+        // If an exception was encountered during the onHeaders event, then
+        // return a rejected promise that wraps that exception.
+        if ($easy->onHeadersException) {
+            return \GuzzleHttp\Promise\rejection_for(
+                new RequestException(
+                    'An error was encountered during the on_headers event',
+                    $easy->request,
+                    $easy->response,
+                    $easy->onHeadersException,
+                    $ctx
+                )
+            );
+        }
+        if (version_compare($ctx[self::CURL_VERSION_STR], self::LOW_CURL_VERSION_NUMBER)) {
+            $message = sprintf(
+                'cURL error %s: %s (%s)',
+                $ctx['errno'],
+                $ctx['error'],
+                ''
+            );
+        } else {
+            $message = sprintf(
+                'cURL error %s: %s (%s) for %s',
+                $ctx['errno'],
+                $ctx['error'],
+                '',
+                $easy->request->getUri()
+            );
+        }
 
-        // // Create a connection exception if it was a specific error code.
-        // $error = isset($connectionErrors[$easy->errno])
-        //     ? new ConnectException($message, $easy->request, null, $ctx)
-        //     : new RequestException($message, $easy->request, $easy->response, null, $ctx);
+        // Create a connection exception if it was a specific error code.
+        $error = isset($connectionErrors[$easy->errno])
+            ? new ConnectException($message, $easy->request, null, $ctx)
+            : new RequestException($message, $easy->request, $easy->response, null, $ctx);
 
-        // return \GuzzleHttp\Promise\rejection_for($error);
+        return \GuzzleHttp\Promise\rejection_for($error);
     }
 
     private function getDefaultConf(EasyHandle $easy)
