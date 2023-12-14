@@ -8,7 +8,7 @@ $envato_item_id = 22989501;
 // Product Url from codecanyon
 $productUrl = 'https://codecanyon.net/item/appointo-booking-management-system/22989501?ref=ajay138';
 
-$updatesDomain = 'https://salonsws.simetrisdigitalagency.com/';
+// $updatesDomain = 'https://localhost:8000';
 
 $verifyDomain = 'https://envato.froid.works';
 
@@ -37,7 +37,7 @@ return [
     /*
     * URL where your updates are stored ( e.g. for a folder named 'updates', under http://site.com/yourapp ).
     */
-    'update_baseurl' => $updatesDomain . '/' . $product,
+    // 'update_baseurl' => $updatesDomain . '/' . $product,
     /*
     * URL to verify your purchase code
     */
@@ -46,7 +46,7 @@ return [
     /*
      *
      */
-    'updater_file_path' => $updatesDomain . '/' . $product . '/laraupdater.json',
+    // 'updater_file_path' => $updatesDomain . '/' . $product . '/laraupdater.json',
 
     /*
     * Set a middleware for the route: updater.update
